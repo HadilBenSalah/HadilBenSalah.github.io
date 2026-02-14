@@ -224,6 +224,80 @@
             color: #D4AF37;
         }
 
+        /* Newsletter Section */
+        .newsletter {
+            border-top: 1px solid #333;
+            text-align: center;
+            background: #0A0A0A;
+        }
+
+        .newsletter-logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            font-size: 1.125rem;
+            color: #A0A0A0;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            background: #000000;
+            border: 1px solid #333;
+            color: #FFFFFF;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+
+        .newsletter-input::placeholder {
+            color: #666;
+        }
+
+        .newsletter-submit {
+            padding: 1rem 2.5rem;
+            background: #D4AF37;
+            color: #000000;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .newsletter-submit:hover {
+            background: #C19B2E;
+            transform: translateY(-2px);
+        }
+
         /* Footer */
         footer {
             border-top: 1px solid #333;
@@ -264,6 +338,19 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .newsletter-input {
+                min-width: 100%;
+            }
+
+            .newsletter-submit {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -273,7 +360,7 @@
     <section class="hero">
         <h1>We grow travel agencies.</h1>
         <p>More visibility. More leads. More bookings.</p>
-        <a href="https://wa.me/21612345678" class="cta-button">Let's Talk</a>
+        <a href="https://wa.me/21612345678?text=Hi%2C%20I%27m%20interested%20in%20growing%20my%20travel%20agency.%20Let%27s%20discuss." class="cta-button" target="_blank" rel="noopener noreferrer">Let's Talk</a>
     </section>
 
     <!-- Services Section -->
@@ -341,10 +428,22 @@
         <h2>Work with us.</h2>
         <p>Currently taking 2-3 clients per month.<br>Based in Tunisia. Serving agencies globally.</p>
         <div class="contact-buttons">
-            <a href="https://wa.me/21612345678" class="contact-button">WhatsApp</a>
-            <a href="mailto:hello@afrops.me" class="contact-button">Email</a>
-            <a href="https://calendly.com/yourlink" class="contact-button">Book a Call</a>
+            <a href="https://wa.me/21628258013?text=Hi%2C%20I%27d%20like%20to%20discuss%20working%20with%20AfroPS%20for%20my%20travel%20agency." class="contact-button" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="mailto:hello@afrops.me?subject=Partnership%20Inquiry&body=Hi%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20working%20with%20AfroPS." class="contact-button">Email</a>
+            <a href="https://calendly.com/yourlink/30min?name=Travel%20Agency%20Consultation" class="contact-button" target="_blank" rel="noopener noreferrer">Book a Call</a>
         </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <!-- Logo will go here - replace logo-placeholder.png with your actual logo file -->
+        <img src="logo.png" alt="AfroPS Logo" class="newsletter-logo">
+        <h2>Stay updated.</h2>
+        <p>Get growth strategies, case studies, and industry insights delivered to your inbox monthly.</p>
+        <form class="newsletter-form" action="https://yoursubscription.com/subscribe" method="POST">
+            <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+            <button type="submit" class="newsletter-submit">Subscribe</button>
+        </form>
     </section>
 
     <!-- Footer -->
