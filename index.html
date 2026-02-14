@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AfroPS - We Grow Travel Agencies</title>
+    <meta name="description" content="Growth operations for travel agencies. More visibility. More leads. More bookings.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: #A0A0A0;
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: #D4AF37;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            border: 2px solid #D4AF37;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        /* Section Base */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        /* Services Section */
+        .services {
+            border-top: 1px solid #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2rem 0;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: #A0A0A0;
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        /* Results Section */
+        .results {
+            border-top: 1px solid #333;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .result-card {
+            background: #0A0A0A;
+            padding: 2.5rem;
+            border: 1px solid #1A1A1A;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+        }
+
+        .result-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        .result-card .metric {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: #A0A0A0;
+        }
+
+        .result-card .metric strong {
+            color: #D4AF37;
+        }
+
+        /* Process Section */
+        .process {
+            border-top: 1px solid #333;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .process-step .number {
+            font-size: 3rem;
+            color: #D4AF37;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .process-step p {
+            color: #A0A0A0;
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        /* Contact Section */
+        .contact {
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+
+        .contact p {
+            font-size: 1.25rem;
+            color: #A0A0A0;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #333;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .services-grid,
+            .results-grid,
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-button,
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>We grow travel agencies.</h1>
+        <p>More visibility. More leads. More bookings.</p>
+        <a href="https://wa.me/21612345678" class="cta-button">Let's Talk</a>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>Three things. Done well.</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Visibility</h3>
+                <p>Google Maps optimization. Review generation. When customers search, you appear.</p>
+            </div>
+            <div class="service-card">
+                <h3>Lead Systems</h3>
+                <p>Track every inquiry. Follow up automatically. Stop losing customers in WhatsApp chaos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Campaigns</h3>
+                <p>Targeted ads. Landing pages. Only pay for results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results">
+        <h2>Recent work.</h2>
+        <div class="results-grid">
+            <div class="result-card">
+                <h3>Tunisia Travel Agency</h3>
+                <div class="metric">Ranking: <strong>#16 → #5</strong> on Google Maps</div>
+                <div class="metric">Reviews: <strong>5 → 35</strong> in 60 days</div>
+                <div class="metric">Inquiries: <strong>+40%</strong></div>
+            </div>
+            <div class="result-card">
+                <h3>Your Agency Next</h3>
+                <div class="metric">Custom strategy for <strong>your market</strong></div>
+                <div class="metric">Systems that work <strong>while you sleep</strong></div>
+                <div class="metric">Results in <strong>30-60 days</strong></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <h2>Simple process.</h2>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="number">1</div>
+                <h3>Diagnosis</h3>
+                <p>30-minute call. We analyze your current setup. Identify what's broken.</p>
+            </div>
+            <div class="process-step">
+                <div class="number">2</div>
+                <h3>Plan</h3>
+                <p>Custom 120-day roadmap. Clear deliverables. No surprises.</p>
+            </div>
+            <div class="process-step">
+                <div class="number">3</div>
+                <h3>Execute</h3>
+                <p>We do the work. You get weekly updates. Results in 30-60 days.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <h2>Work with us.</h2>
+        <p>Currently taking 2-3 clients per month.<br>Based in Tunisia. Serving agencies globally.</p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/21612345678" class="contact-button">WhatsApp</a>
+            <a href="mailto:hello@afrops.me" class="contact-button">Email</a>
+            <a href="https://calendly.com/yourlink" class="contact-button">Book a Call</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>AfroPS © 2025</p>
+    </footer>
+
+</body>
+</html>
