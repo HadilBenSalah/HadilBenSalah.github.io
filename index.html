@@ -35,27 +35,25 @@
 
     .cursor {
       position: fixed;
+      top: 0; left: 0;
       width: 8px; height: 8px;
       background: var(--gold);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      top: 0; left: 0;
-      transform: translate(-50%, -50%);
-      transition: transform 0.15s, opacity 0.2s;
-      will-change: left, top, transform;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
     }
     .cursor-ring {
       position: fixed;
+      top: 0; left: 0;
       width: 32px; height: 32px;
-      border: 1px solid rgba(184,137,42,0.4);
+      border: 1px solid rgba(184,137,42,0.5);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
-      top: 0; left: 0;
-      transform: translate(-50%, -50%);
-      transition: transform 0.2s, opacity 0.2s;
-      will-change: left, top, transform;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
     }
 
     /* Grain */
@@ -619,41 +617,46 @@
   // Mark JS as available — reveals only hide when JS runs
   document.body.classList.add('js-ready');
 
-  // Smooth cursor with requestAnimationFrame
+  // Smooth cursor — fully transform-based, no left/top
   const cursorEl = document.getElementById('c');
   const ringEl   = document.getElementById('cr');
-  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-  let ringX  = mouseX, ringY = mouseY;
+
+  // Half-sizes for centering
+  const cR = 4, rR = 16; // cursor radius, ring radius
+
+  let mouseX = -100, mouseY = -100;
+  let ringX  = -100, ringY  = -100;
+  let hovering = false;
 
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
 
-  (function animateCursor() {
-    // Cursor snaps instantly
-    cursorEl.style.left = mouseX + 'px';
-    cursorEl.style.top  = mouseY + 'px';
-    // Ring lerps smoothly behind
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    ringEl.style.left = ringX + 'px';
-    ringEl.style.top  = ringY + 'px';
-    requestAnimationFrame(animateCursor);
+  // Hide when mouse leaves window
+  document.addEventListener('mouseleave', () => {
+    cursorEl.style.opacity = '0';
+    ringEl.style.opacity   = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    cursorEl.style.opacity = '1';
+    ringEl.style.opacity   = '1';
+  });
+
+  (function loop() {
+    // Cursor: instant snap, centered on pointer
+    cursorEl.style.transform = `translate3d(${mouseX - cR}px, ${mouseY - cR}px, 0) scale(${hovering ? 1.8 : 1})`;
+    // Ring: lerp for smooth trailing, centered on pointer
+    ringX += (mouseX - ringX) * 0.13;
+    ringY += (mouseY - ringY) * 0.13;
+    ringEl.style.transform = `translate3d(${ringX - rR}px, ${ringY - rR}px, 0) scale(${hovering ? 1.4 : 1})`;
+    requestAnimationFrame(loop);
   })();
 
-  // Scale ring on hover
+  // Hover effect on interactive elements
   document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursorEl.style.transform = 'translate(-50%,-50%) scale(1.8)';
-      ringEl.style.transform   = 'translate(-50%,-50%) scale(1.5)';
-      ringEl.style.opacity     = '0.3';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursorEl.style.transform = 'translate(-50%,-50%) scale(1)';
-      ringEl.style.transform   = 'translate(-50%,-50%) scale(1)';
-      ringEl.style.opacity     = '1';
-    });
+    el.addEventListener('mouseenter', () => { hovering = true;  });
+    el.addEventListener('mouseleave', () => { hovering = false; });
   });
 
   // Scroll reveal
