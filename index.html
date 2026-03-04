@@ -41,19 +41,18 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      transform: translate3d(0, 0, 0);
-      will-change: transform;
+      transform: translate3d(var(--cx, -100px), var(--cy, -100px), 0) translate(-50%, -50%);
     }
     .cursor-ring {
       position: fixed;
       top: 0; left: 0;
-      width: 32px; height: 32px;
-      border: 1px solid rgba(184,137,42,0.5);
+      width: 30px; height: 30px;
+      border: 1px solid rgba(184,137,42,0.45);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
-      transform: translate3d(0, 0, 0);
-      will-change: transform;
+      transform: translate3d(var(--rx, -100px), var(--ry, -100px), 0) translate(-50%, -50%);
+      transition: transform 0.09s linear;
     }
 
     /* Grain */
@@ -369,61 +368,6 @@
     .d2 { transition-delay: 0.2s; }
     .d3 { transition-delay: 0.3s; }
 
-    /* ── MAX WIDTH CONTAINER ── */
-    nav > *,
-    .hero,
-    .problem,
-    .sec,
-    .cta-split,
-    .nl-section,
-    footer {
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    /* Make nav itself full-width but content capped */
-    nav {
-      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      max-width: none;
-    }
-
-    .hero,
-    .problem,
-    .sec,
-    .cta-split,
-    .nl-section {
-      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      max-width: none;
-    }
-
-    footer {
-      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
-      max-width: none;
-    }
-
-    /* ── PERFORMANCE HINTS ── */
-    .reveal         { will-change: opacity, transform; }
-    .cursor         { will-change: transform; }
-    .cursor-ring    { will-change: transform; }
-    .pillar         { will-change: background; }
-    .btn-p, .btn-g  { will-change: transform; }
-
-    /* ── DESKTOP TYPOGRAPHY POLISH ── */
-    @media (min-width: 1200px) {
-      .hero h1   { font-size: 6.8rem; }
-      .problem-l h2 { font-size: 3.6rem; }
-      .cta-l h2  { font-size: 4rem; }
-    }
-
     /* RESPONSIVE */
     @media (max-width: 900px) {
       nav { padding: 1.4rem 1.8rem; }
@@ -617,46 +561,13 @@
   // Mark JS as available — reveals only hide when JS runs
   document.body.classList.add('js-ready');
 
-  // Smooth cursor — fully transform-based, no left/top
-  const cursorEl = document.getElementById('c');
-  const ringEl   = document.getElementById('cr');
-
-  // Half-sizes for centering
-  const cR = 4, rR = 16; // cursor radius, ring radius
-
-  let mouseX = -100, mouseY = -100;
-  let ringX  = -100, ringY  = -100;
-  let hovering = false;
-
+  // Cursor — CSS variable approach, nothing simpler
+  const root = document.documentElement;
   document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Hide when mouse leaves window
-  document.addEventListener('mouseleave', () => {
-    cursorEl.style.opacity = '0';
-    ringEl.style.opacity   = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    cursorEl.style.opacity = '1';
-    ringEl.style.opacity   = '1';
-  });
-
-  (function loop() {
-    // Cursor: instant snap, centered on pointer
-    cursorEl.style.transform = `translate3d(${mouseX - cR}px, ${mouseY - cR}px, 0) scale(${hovering ? 1.8 : 1})`;
-    // Ring: lerp for smooth trailing, centered on pointer
-    ringX += (mouseX - ringX) * 0.13;
-    ringY += (mouseY - ringY) * 0.13;
-    ringEl.style.transform = `translate3d(${ringX - rR}px, ${ringY - rR}px, 0) scale(${hovering ? 1.4 : 1})`;
-    requestAnimationFrame(loop);
-  })();
-
-  // Hover effect on interactive elements
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => { hovering = true;  });
-    el.addEventListener('mouseleave', () => { hovering = false; });
+    root.style.setProperty('--cx', e.clientX + 'px');
+    root.style.setProperty('--cy', e.clientY + 'px');
+    root.style.setProperty('--rx', e.clientX + 'px');
+    root.style.setProperty('--ry', e.clientY + 'px');
   });
 
   // Scroll reveal
