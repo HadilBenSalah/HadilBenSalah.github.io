@@ -40,8 +40,10 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
+      top: 0; left: 0;
       transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s;
+      transition: transform 0.15s, opacity 0.2s;
+      will-change: left, top, transform;
     }
     .cursor-ring {
       position: fixed;
@@ -50,8 +52,10 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
+      top: 0; left: 0;
       transform: translate(-50%, -50%);
-      transition: transform 0.15s, width 0.25s, height 0.25s;
+      transition: transform 0.2s, opacity 0.2s;
+      will-change: left, top, transform;
     }
 
     /* Grain */
@@ -367,6 +371,61 @@
     .d2 { transition-delay: 0.2s; }
     .d3 { transition-delay: 0.3s; }
 
+    /* ── MAX WIDTH CONTAINER ── */
+    nav > *,
+    .hero,
+    .problem,
+    .sec,
+    .cta-split,
+    .nl-section,
+    footer {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Make nav itself full-width but content capped */
+    nav {
+      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      max-width: none;
+    }
+
+    .hero,
+    .problem,
+    .sec,
+    .cta-split,
+    .nl-section {
+      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      max-width: none;
+    }
+
+    footer {
+      padding-left: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      padding-right: max(4rem, calc((100vw - 1400px) / 2 + 4rem));
+      max-width: none;
+    }
+
+    /* ── PERFORMANCE HINTS ── */
+    .reveal         { will-change: opacity, transform; }
+    .cursor         { will-change: transform; }
+    .cursor-ring    { will-change: transform; }
+    .pillar         { will-change: background; }
+    .btn-p, .btn-g  { will-change: transform; }
+
+    /* ── DESKTOP TYPOGRAPHY POLISH ── */
+    @media (min-width: 1200px) {
+      .hero h1   { font-size: 6.8rem; }
+      .problem-l h2 { font-size: 3.6rem; }
+      .cta-l h2  { font-size: 4rem; }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       nav { padding: 1.4rem 1.8rem; }
@@ -560,11 +619,41 @@
   // Mark JS as available — reveals only hide when JS runs
   document.body.classList.add('js-ready');
 
-  // Cursor
-  const c = document.getElementById('c'), cr = document.getElementById('cr');
+  // Smooth cursor with requestAnimationFrame
+  const cursorEl = document.getElementById('c');
+  const ringEl   = document.getElementById('cr');
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let ringX  = mouseX, ringY = mouseY;
+
   document.addEventListener('mousemove', e => {
-    c.style.left = cr.style.left = e.clientX + 'px';
-    c.style.top  = cr.style.top  = e.clientY + 'px';
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  (function animateCursor() {
+    // Cursor snaps instantly
+    cursorEl.style.left = mouseX + 'px';
+    cursorEl.style.top  = mouseY + 'px';
+    // Ring lerps smoothly behind
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ringEl.style.left = ringX + 'px';
+    ringEl.style.top  = ringY + 'px';
+    requestAnimationFrame(animateCursor);
+  })();
+
+  // Scale ring on hover
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorEl.style.transform = 'translate(-50%,-50%) scale(1.8)';
+      ringEl.style.transform   = 'translate(-50%,-50%) scale(1.5)';
+      ringEl.style.opacity     = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorEl.style.transform = 'translate(-50%,-50%) scale(1)';
+      ringEl.style.transform   = 'translate(-50%,-50%) scale(1)';
+      ringEl.style.opacity     = '1';
+    });
   });
 
   // Scroll reveal
